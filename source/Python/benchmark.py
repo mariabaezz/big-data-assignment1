@@ -1,6 +1,7 @@
 import random
 import time
 import csv
+from pathlib import Path
 
 from matrix_multiplication import matrix_multiply, generate_matrix
 
@@ -10,7 +11,10 @@ random.seed(42)
 sizes = [50, 100, 150, 200, 250]
 repetitions = 5
 
-with open("python_results.csv", "w", newline="") as file:
+project_root = Path(__file__).resolve().parents[2]
+results_file = project_root / "results" / "python_results.csv"
+
+with open(results_file, "w", newline="") as file:
     writer = csv.writer(file)
 
     writer.writerow([
