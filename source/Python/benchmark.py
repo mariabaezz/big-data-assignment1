@@ -2,7 +2,7 @@ import random
 import time
 import csv
 
-from source.Python.matrix_multiplication import matrix_multiply, generate_matrix
+from matrix_multiplication import matrix_multiply, generate_matrix
 
 
 random.seed(42)
