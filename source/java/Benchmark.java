@@ -1,13 +1,19 @@
 import java.util.Random;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Benchmark {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         int[] sizes = {50, 100, 150, 200, 250};
         int repetitions = 5;
 
         Random random = new Random(42);
+
+        FileWriter writer = new FileWriter("../../results/java_results.csv");
+
+        writer.write("language,matrix_size,repetition,execution_time_seconds\n");
 
         for (int n : sizes) {
 
@@ -27,6 +33,13 @@ public class Benchmark {
 
                 double elapsedTime = (end - start) / 1_000_000_000.0;
 
+                writer.write(
+                    "Java," +
+                    n + "," +
+                    repetition + "," +
+                    elapsedTime + "\n"
+                );
+
                 System.out.println(
                     "Size: " + n +
                     " | Repetition: " + repetition +
@@ -34,5 +47,7 @@ public class Benchmark {
                 );
             }
         }
+
+        writer.close();
     }
 }
