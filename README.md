@@ -29,6 +29,8 @@ How does the execution time and memory usage of the same basic dense matrix mult
 The hypothesis is that execution time will increase approximately according to the cubic growth of the standard matrix multiplication algorithm as matrix size increases.
 
 It is also expected that the three implementations will show different execution times and memory usage because of differences in their runtime environments, memory representations and execution models. These results are specific to the tested implementations and experimental environment and are not intended as universal claims about the programming languages.
+
+
 ---
 
 ## Project Structure
