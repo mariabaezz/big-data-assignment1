@@ -286,54 +286,57 @@ The logarithmic execution-time plot is included because the large difference bet
 
 ## Memory Benchmark
 
-Memory usage is measured as:
+Memory usage is measured using Peak Resident Set Size (Peak RSS).
 
-```text
-Peak Resident Set Size (Peak RSS)
-```
+The measurement uses the macOS command `/usr/bin/time -l`.
 
-The measurement uses the macOS command:
+The memory benchmark automatically executes the different matrix sizes for Python, Java and C, extracts the maximum resident set size, and stores the results in a common CSV file.
 
-```text
-/usr/bin/time -l
-```
+### Python
 
-The memory benchmark automatically executes the different matrix sizes and stores the measured peak RSS.
+Python does not require compilation.
 
-Before running the complete memory benchmark, compile the Java and C memory programs.
+The memory test program is located at:
+
+source/Python/memory_test.py
+
+The complete memory benchmark is launched through:
+
+python3 source/Python/memory_benchmark.py
+
+This script internally executes the Python memory test for every matrix size using `/usr/bin/time -l`.
 
 ### Java
 
-```bash
+Before running the complete memory benchmark, compile the Java memory test:
+
 cd source/java
 javac MatrixMultiplication.java MemoryTest.java
 cd ../..
-```
 
 ### C
 
-```bash
+Before running the complete memory benchmark, compile the C memory test with optimization level `-O2`:
+
 cd source/c
 clang -O2 matrix_multiplication.c memory_test.c -o memory_test
 cd ../..
-```
 
-Then run from the project root:
+### Run the complete memory benchmark
 
-```bash
+From the project root, run:
+
 python3 source/Python/memory_benchmark.py
-```
+
+This executes the memory tests for Python, Java and C for all tested matrix sizes.
 
 Results are stored in:
 
-```text
 results/memory_results.csv
-```
 
-The reported Peak RSS represents the memory usage of the complete process, not only the memory occupied by the matrices. Therefore, runtime overhead such as the Python interpreter and Java Virtual Machine is also included.
+The reported Peak RSS represents the memory usage of the complete process, not only the memory occupied by the matrices. Therefore, runtime overhead such as the Python interpreter and the Java Virtual Machine is also included.
 
 The memory measurement script is specific to macOS because it uses `/usr/bin/time -l`.
-
 ---
 
 ## Experimental Environment
