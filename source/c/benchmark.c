@@ -3,9 +3,41 @@
 #include <time.h>
 
 void matrix_multiply(int **A, int **B, int **C, int n);
-int **generate_matrix(int n);
 int **create_empty_matrix(int n);
 void free_matrix(int **matrix, int n);
+
+
+int **read_matrix(const char *filename, int n) {
+
+    FILE *file = fopen(filename, "r");
+
+    int **matrix = create_empty_matrix(n);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+
+            if (j < n - 1) {
+                fscanf(file, "%d,", &matrix[i][j]);
+            } else {
+                fscanf(file, "%d", &matrix[i][j]);
+            }
+        }
+    }
+
+    fclose(file);
+
+    return matrix;
+}
+
+
+double current_time() {
+
+    struct timespec time;
+
+    clock_gettime(CLOCK_MONOTONIC, &time);
+
+    return time.tv_sec + time.tv_nsec / 1000000000.0;
+}
 
 
 int main() {
@@ -13,30 +45,36 @@ int main() {
     int sizes[] = {50, 100, 150, 200, 250};
     int repetitions = 5;
 
-    srand(42);
-
     FILE *file = fopen("../../results/c_results.csv", "w");
 
-    fprintf(file, "language,matrix_size,repetition,execution_time_seconds\n");
+    fprintf(
+        file,
+        "language,matrix_size,repetition,execution_time_seconds\n"
+    );
 
     for (int s = 0; s < 5; s++) {
 
         int n = sizes[s];
 
-        int **A = generate_matrix(n);
-        int **B = generate_matrix(n);
+        char filenameA[100];
+        char filenameB[100];
+
+        sprintf(filenameA, "../../inputs/A_%d.csv", n);
+        sprintf(filenameB, "../../inputs/B_%d.csv", n);
+
+        int **A = read_matrix(filenameA, n);
+        int **B = read_matrix(filenameB, n);
         int **C = create_empty_matrix(n);
 
         for (int repetition = 1; repetition <= repetitions; repetition++) {
 
-            clock_t start = clock();
+            double start = current_time();
 
             matrix_multiply(A, B, C, n);
 
-            clock_t end = clock();
+            double end = current_time();
 
-            double elapsed_time =
-                (double)(end - start) / CLOCKS_PER_SEC;
+            double elapsed_time = end - start;
 
             printf(
                 "Size: %d | Repetition: %d | Time: %f seconds\n",

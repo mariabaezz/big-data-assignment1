@@ -1,5 +1,6 @@
 import java.util.Random;
 
+
 public class MatrixMultiplication {
 
     public static int[][] matrixMultiply(int[][] A, int[][] B) {
