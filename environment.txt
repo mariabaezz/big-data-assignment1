@@ -20,6 +20,8 @@ Software
 - Java: OpenJDK 25.0.2
 - javac: 25.0.2
 - Clang: Apple clang 21.0.0
+- pandas: 3.0.0
+- matplotlib: 3.10.8
 
 Compiler and Runtime Settings
 - C compiler optimisation flag: -O2
