@@ -132,21 +132,27 @@ Before benchmarking, the implementations are tested using:
 
 From the project root:
 
+```bash
 python3 source/Python/test_correct.py
+```
 
 ### Java
 
+```bash
 cd source/java
 javac MatrixMultiplication.java TestCorrectness.java
 java TestCorrectness
 cd ../..
+```
 
 ### C
 
+```bash
 cd source/c
 clang matrix_multiplication.c test_correctness.c -o test_correctness
 ./test_correctness
 cd ../..
+```
 
 All correctness tests should return `true`.
 
@@ -156,7 +162,9 @@ In addition to the basic correctness tests, the Python implementation is compare
 
 Run from the project root:
 
+```bash
 python3 source/Python/reference_test.py
+```
 
 The reference test uses the same CSV input matrices used in the benchmarks and compares the complete multiplication result with `numpy.matmul`.
 
@@ -208,53 +216,59 @@ The checksum is stored together with every runtime measurement in the result CSV
 
 Python uses:
 
-time.perf_counter()
+`time.perf_counter()`
 
 Run from the project root:
-
+```bash
 python3 source/Python/benchmark.py
+```
 
 Results are stored in:
 
-results/python_results.csv
+`results/python_results.csv`
+
 
 ### Java
 
 Java uses:
 
-System.nanoTime()
+`System.nanoTime()`
 
 Three untimed multiplication executions are performed for each matrix size before the five measured repetitions as JVM warm-up.
 
 Run:
 
+```bash
 cd source/java
 javac MatrixMultiplication.java Benchmark.java
 java Benchmark
 cd ../..
+```
 
 Results are stored in:
 
-results/java_results.csv
+`results/java_results.csv`
 
 ### C
 
 C uses:
 
-CLOCK_MONOTONIC
+`CLOCK_MONOTONIC`
 
 The program is compiled with optimisation level `-O2`.
 
 Run:
 
+```bash
 cd source/c
 clang -O2 matrix_multiplication.c benchmark.c -o benchmark
 ./benchmark
 cd ../..
+```
 
 Results are stored in:
 
-results/c_results.csv
+`results/c_results.csv`
 
 ### Fixed Execution Settings
 
@@ -283,13 +297,15 @@ For every matrix size and language, the analysis reports:
 
 Run from the project root:
 
+```bash
 python3 analysis/analysis_results.py
+```
 
 The analysis uses `pandas`.
 
 The script also generates the summary file:
 
-results/summary_time.csv
+`results/summary_time.csv`
 
 This file contains the median execution time and IQR for every language and matrix size and is used to prepare the result tables in the report.
 
@@ -319,13 +335,15 @@ The plots are generated using `matplotlib`.
 
 Run:
 
+```bash
 python3 analysis/plots.py
+```
 
 The following figures are generated:
 
-figures/execution_time.png
-figures/execution_time_log.png
-figures/memory_usage.png
+- figures/execution_time.png
+- figures/execution_time_log.png
+- figures/memory_usage.png
 
 The logarithmic execution-time plot is included because the large difference between Python and the compiled/JVM implementations makes Java and C difficult to distinguish on a linear scale.
 
@@ -345,11 +363,13 @@ Python does not require compilation.
 
 The memory test program is located at:
 
-source/Python/memory_test.py
+`source/Python/memory_test.py`
 
 The complete memory benchmark is launched through:
 
+```bash
 python3 source/Python/memory_benchmark.py
+```
 
 This script internally executes the Python memory test for every matrix size using `/usr/bin/time -l`.
 
@@ -357,29 +377,35 @@ This script internally executes the Python memory test for every matrix size usi
 
 Before running the complete memory benchmark, compile the Java memory test:
 
+```bash
 cd source/java
 javac MatrixMultiplication.java MemoryTest.java
 cd ../..
+```
 
 ### C
 
 Before running the complete memory benchmark, compile the C memory test with optimization level `-O2`:
 
+```bash
 cd source/c
 clang -O2 matrix_multiplication.c memory_test.c -o memory_test
 cd ../..
+```
 
 ### Run the Complete Memory Benchmark
 
 From the project root, run:
 
+```bash
 python3 source/Python/memory_benchmark.py
+```
 
 This executes the memory tests for Python, Java and C for all tested matrix sizes.
 
 Results are stored in:
 
-results/memory_results.csv
+`results/memory_results.csv`
 
 The reported Peak RSS represents the memory usage of the complete process, not only the memory occupied by the matrices. Therefore, runtime overhead such as the Python interpreter and the Java Virtual Machine is also included.
 
@@ -425,6 +451,7 @@ environment.txt
 ChatGPT (OpenAI) was used as a support tool during the assignment for explaining concepts, planning the experimental workflow, assisting with code development and debugging, and revising the English wording of the documentation.
 
 All programs were reviewed and executed by the student. Experimental measurements were generated locally on the hardware described above, and the reported results were checked against the raw CSV files. NumPy was used only as a trusted correctness reference and not as part of the benchmarked matrix multiplication implementations.
+
 ---
 ## Reproducibility
 
