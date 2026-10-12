@@ -44,6 +44,8 @@ public class MemoryTest {
             n
         );
 
-        int[][] C = MatrixMultiplication.matrixMultiply(A, B);
+        int[][] C = new int[n][n];
+
+        MatrixMultiplication.matrixMultiply(A, B, C);
     }
 }
