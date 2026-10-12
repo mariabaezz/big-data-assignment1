@@ -1,0 +1,41 @@
+Experimental Environment
+
+Hardware
+- Model: MacBook Pro
+- Model Identifier: Mac16,1
+- Chip: Apple M4
+- Total CPU cores: 10
+  - 4 Performance cores
+  - 6 Efficiency cores
+- Physical cores: 10
+- Logical processors: 10
+- RAM: 16 GB
+
+Operating System
+- macOS 26.3.1
+- Architecture: arm64
+
+Software
+- Python: 3.13.0
+- Java: OpenJDK 25.0.2
+- javac: 25.0.2
+- Clang: Apple clang 21.0.0
+
+Compiler and Runtime Settings
+- C compiler optimisation flag: -O2
+- Java warm-up: one untimed execution before measured repetitions
+- Python timing function: time.perf_counter()
+- Java timing function: System.nanoTime()
+- C timing function: CLOCK_MONOTONIC
+
+Experimental Protocol
+- Matrix sizes: 50, 100, 150, 200, 250
+- Repetitions per size and language: 5
+- Input matrices: shared CSV files generated once with seed 42
+- Matrix values: integers from 0 to 9
+- Timing boundary: matrix multiplication only; input loading excluded
+
+Memory Measurement
+- Metric: Peak Resident Set Size (Peak RSS)
+- Tool: /usr/bin/time -l
+- Platform used for memory measurement: macOS
