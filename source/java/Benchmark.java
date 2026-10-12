@@ -7,37 +7,41 @@ public class Benchmark {
 
     public static int[][] readMatrix(String filename, int n) throws IOException {
 
-    int[][] matrix = new int[n][n];
+        int[][] matrix = new int[n][n];
 
-    BufferedReader reader = new BufferedReader(new FileReader(filename));
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
 
-    String line;
-    int row = 0;
+        String line;
+        int row = 0;
 
-    while ((line = reader.readLine()) != null) {
+        while ((line = reader.readLine()) != null) {
 
-        String[] values = line.split(",");
+            String[] values = line.split(",");
 
-        for (int col = 0; col < n; col++) {
-            matrix[row][col] = Integer.parseInt(values[col]);
+            for (int col = 0; col < n; col++) {
+                matrix[row][col] = Integer.parseInt(values[col]);
+            }
+
+            row++;
         }
 
-        row++;
+        reader.close();
+
+        return matrix;
     }
 
-    reader.close();
 
-    return matrix;
-}
     public static void main(String[] args) throws IOException {
 
         int[] sizes = {50, 100, 150, 200, 250};
         int repetitions = 5;
 
+        FileWriter writer =
+            new FileWriter("../../results/java_results.csv");
 
-        FileWriter writer = new FileWriter("../../results/java_results.csv");
-
-        writer.write("language,matrix_size,repetition,execution_time_seconds\n");
+        writer.write(
+            "language,matrix_size,repetition,execution_time_seconds,checksum\n"
+        );
 
         for (int n : sizes) {
 
@@ -51,30 +55,45 @@ public class Benchmark {
                 n
             );
 
-            // Warm-up
-            MatrixMultiplication.matrixMultiply(A, B);
+            int[][] C = new int[n][n];
+
+            // Warm-up: 3 executions
+            for (int warmup = 0; warmup < 3; warmup++) {
+                MatrixMultiplication.matrixMultiply(A, B, C);
+            }
 
             for (int repetition = 1; repetition <= repetitions; repetition++) {
 
                 long start = System.nanoTime();
 
-                int[][] C = MatrixMultiplication.matrixMultiply(A, B);
+                MatrixMultiplication.matrixMultiply(A, B, C);
 
                 long end = System.nanoTime();
 
-                double elapsedTime = (end - start) / 1_000_000_000.0;
+                double elapsedTime =
+                    (end - start) / 1_000_000_000.0;
+                
+                long checksum = 0;
+
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < n; j++) {
+                        checksum += C[i][j];
+                    }
+                }
 
                 writer.write(
                     "Java," +
                     n + "," +
                     repetition + "," +
-                    elapsedTime + "\n"
+                    elapsedTime + "," +
+                    checksum + "\n"
                 );
 
                 System.out.println(
                     "Size: " + n +
                     " | Repetition: " + repetition +
-                    " | Time: " + elapsedTime + " seconds"
+                    " | Time: " + elapsedTime + " seconds" +
+                    " | Checksum: " + checksum
                 );
             }
         }

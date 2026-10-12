@@ -4,6 +4,7 @@ public class TestCorrectness {
 
     public static void main(String[] args) {
 
+        // Test 1: Known matrices
         int[][] A = {
             {1, 2},
             {3, 4}
@@ -19,7 +20,9 @@ public class TestCorrectness {
             {43, 50}
         };
 
-        int[][] result = MatrixMultiplication.matrixMultiply(A, B);
+        int[][] result = new int[2][2];
+
+        MatrixMultiplication.matrixMultiply(A, B, result);
 
         System.out.println(
             "Known matrices test: " +
@@ -27,6 +30,7 @@ public class TestCorrectness {
         );
 
 
+        // Test 2: Identity matrix
         int[][] A2 = {
             {1, 0, 4},
             {3, 3, 2},
@@ -39,7 +43,9 @@ public class TestCorrectness {
             {0, 0, 1}
         };
 
-        result = MatrixMultiplication.matrixMultiply(A2, I);
+        result = new int[3][3];
+
+        MatrixMultiplication.matrixMultiply(A2, I, result);
 
         System.out.println(
             "Identity matrix test: " +
@@ -47,6 +53,7 @@ public class TestCorrectness {
         );
 
 
+        // Test 3: Zero matrix
         int[][] Z = {
             {0, 0, 0},
             {0, 0, 0},
@@ -59,7 +66,9 @@ public class TestCorrectness {
             {0, 0, 0}
         };
 
-        result = MatrixMultiplication.matrixMultiply(A2, Z);
+        result = new int[3][3];
+
+        MatrixMultiplication.matrixMultiply(A2, Z, result);
 
         System.out.println(
             "Zero matrix test: " +

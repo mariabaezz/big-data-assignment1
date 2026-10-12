@@ -49,7 +49,7 @@ int main() {
 
     fprintf(
         file,
-        "language,matrix_size,repetition,execution_time_seconds\n"
+        "language,matrix_size,repetition,execution_time_seconds,checksum\n"
     );
 
     for (int s = 0; s < 5; s++) {
@@ -76,19 +76,29 @@ int main() {
 
             double elapsed_time = end - start;
 
+            long long checksum = 0;
+
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    checksum += C[i][j];
+                }
+            }
+
             printf(
-                "Size: %d | Repetition: %d | Time: %f seconds\n",
+                "Size: %d | Repetition: %d | Time: %f seconds | Checksum: %lld\n",
                 n,
                 repetition,
-                elapsed_time
+                elapsed_time,
+                checksum
             );
 
             fprintf(
                 file,
-                "C,%d,%d,%f\n",
+                "C,%d,%d,%f,%lld\n",
                 n,
                 repetition,
-                elapsed_time
+                elapsed_time,
+                checksum
             );
         }
 
