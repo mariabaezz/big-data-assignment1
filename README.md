@@ -63,7 +63,7 @@ Assignment1/
 │   ├── java_results.csv
 │   ├── c_results.csv
 │   ├── memory_results.csv
-|   └── summary_time.csv
+│   └── summary_time.csv
 │
 ├── source/
 │   ├── Python/
@@ -154,7 +154,7 @@ clang matrix_multiplication.c test_correctness.c -o test_correctness
 cd ../..
 ```
 
-All correctness tests should return `true`.
+All correctness tests should pass
 
 ### Reference Validation
 
