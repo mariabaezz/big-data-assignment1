@@ -85,7 +85,7 @@ int main() {
             }
 
             printf(
-                "Size: %d | Repetition: %d | Time: %f seconds | Checksum: %lld\n",
+                "Size: %d | Repetition: %d | Time: %.9f seconds | Checksum: %lld\n",
                 n,
                 repetition,
                 elapsed_time,
@@ -94,7 +94,7 @@ int main() {
 
             fprintf(
                 file,
-                "C,%d,%d,%f,%lld\n",
+                "C,%d,%d,%.9f,%lld\n",
                 n,
                 repetition,
                 elapsed_time,

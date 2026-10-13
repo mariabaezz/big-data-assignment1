@@ -14,6 +14,14 @@ python_medians = []
 java_medians = []
 c_medians = []
 
+python_lower = []
+python_upper = []
+java_lower = []
+java_upper = []
+c_lower = []
+c_upper = []
+
+
 
 for size in sizes:
 
@@ -33,12 +41,56 @@ for size in sizes:
     java_medians.append(java_times.median())
     c_medians.append(c_times.median())
 
+    python_lower.append(
+        python_times.median() - python_times.quantile(0.25)
+    )
+    python_upper.append(
+        python_times.quantile(0.75) - python_times.median()
+    )
+
+    java_lower.append(
+        java_times.median() - java_times.quantile(0.25)
+    )
+    java_upper.append(
+        java_times.quantile(0.75) - java_times.median()
+    )
+
+    c_lower.append(
+        c_times.median() - c_times.quantile(0.25)
+    )
+    c_upper.append(
+        c_times.quantile(0.75) - c_times.median()
+    )
+
 
 plt.figure()
 
-plt.plot(sizes, python_medians, marker="o", label="Python")
-plt.plot(sizes, java_medians, marker="o", label="Java")
-plt.plot(sizes, c_medians, marker="o", label="C")
+plt.errorbar(
+    sizes,
+    python_medians,
+    yerr=[python_lower, python_upper],
+    marker="o",
+    capsize=4,
+    label="Python"
+)
+
+plt.errorbar(
+    sizes,
+    java_medians,
+    yerr=[java_lower, java_upper],
+    marker="o",
+    capsize=4,
+    label="Java"
+)
+
+plt.errorbar(
+    sizes,
+    c_medians,
+    yerr=[c_lower, c_upper],
+    marker="o",
+    capsize=4,
+    label="C"
+)
 
 plt.xlabel("Matrix size (n)")
 plt.ylabel("Median execution time (seconds)")
@@ -53,9 +105,32 @@ plt.show()
 
 plt.figure()
 
-plt.plot(sizes, python_medians, marker="o", label="Python")
-plt.plot(sizes, java_medians, marker="o", label="Java")
-plt.plot(sizes, c_medians, marker="o", label="C")
+plt.errorbar(
+    sizes,
+    python_medians,
+    yerr=[python_lower, python_upper],
+    marker="o",
+    capsize=4,
+    label="Python"
+)
+
+plt.errorbar(
+    sizes,
+    java_medians,
+    yerr=[java_lower, java_upper],
+    marker="o",
+    capsize=4,
+    label="Java"
+)
+
+plt.errorbar(
+    sizes,
+    c_medians,
+    yerr=[c_lower, c_upper],
+    marker="o",
+    capsize=4,
+    label="C"
+)
 
 plt.yscale("log")
 
