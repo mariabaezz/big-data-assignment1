@@ -1,4 +1,5 @@
 import pandas as pd
+import math
 
 python_data = pd.read_csv("results/python_results.csv")
 java_data = pd.read_csv("results/java_results.csv")
@@ -85,9 +86,37 @@ summary = pd.DataFrame(
     ]
 )
 
+
+# Normalize median execution time by n^3
+summary["normalized_time"] = (
+    summary["median_time_seconds"] /
+    (summary["matrix_size"] ** 3)
+)
+
+
 summary.to_csv(
     "results/summary_time.csv",
     index=False
 )
 
+
 print("Summary saved to results/summary_time.csv")
+
+
+print("\nLOG-LOG SLOPE")
+
+for language in ["Python", "Java", "C"]:
+
+    language_data = summary[
+        summary["language"] == language
+    ].sort_values("matrix_size")
+
+    n1 = language_data.iloc[0]["matrix_size"]
+    n2 = language_data.iloc[-1]["matrix_size"]
+
+    t1 = language_data.iloc[0]["median_time_seconds"]
+    t2 = language_data.iloc[-1]["median_time_seconds"]
+
+    slope = math.log(t2 / t1) / math.log(n2 / n1)
+
+    print(language, "slope:", slope)
